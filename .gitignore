@@ -21,6 +21,7 @@ release.properties
 pom.xml.*
 project.properties
 gradle.properties
+.gradle
 
 #Ant
 build.xml
