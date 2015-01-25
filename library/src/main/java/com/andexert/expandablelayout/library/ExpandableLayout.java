@@ -108,8 +108,9 @@ public class ExpandableLayout extends RelativeLayout
     private void expand(final View v)
     {
         v.measure(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT);
-        final int targetHeight = v.getMeasuredHeight();
-        v.getLayoutParams().height = 0;
+        final int startTopMargin = - v.getMeasuredHeight();
+        final int targetTopMargin = 0;
+        ((LayoutParams) v.getLayoutParams()).topMargin = startTopMargin;
         v.setVisibility(VISIBLE);
 
         Animation animation = new Animation()
@@ -119,10 +120,10 @@ public class ExpandableLayout extends RelativeLayout
             {
                 if (interpolatedTime == 1)
                     isOpened = true;
-                v.getLayoutParams().height = (interpolatedTime == 1) ? LayoutParams.WRAP_CONTENT : (int) (targetHeight * interpolatedTime);
+                ((LayoutParams) v.getLayoutParams()).topMargin = (int) (startTopMargin
+                        + (targetTopMargin - startTopMargin) * interpolatedTime);
                 v.requestLayout();
             }
-
 
             @Override
             public boolean willChangeBounds() {
@@ -135,7 +136,10 @@ public class ExpandableLayout extends RelativeLayout
 
     private void collapse(final View v)
     {
-        final int initialHeight = v.getMeasuredHeight();
+        final int startTopMargin = 0;
+        final int targetTopMargin = - v.getMeasuredHeight();
+        ((LayoutParams) v.getLayoutParams()).topMargin = startTopMargin;
+
         Animation animation = new Animation()
         {
             @Override
@@ -146,7 +150,8 @@ public class ExpandableLayout extends RelativeLayout
                     isOpened = false;
                 }
                 else{
-                    v.getLayoutParams().height = initialHeight - (int)(initialHeight * interpolatedTime);
+                    ((LayoutParams) v.getLayoutParams()).topMargin = (int) (startTopMargin
+                            + (targetTopMargin - startTopMargin) * interpolatedTime);
                     v.requestLayout();
                 }
             }

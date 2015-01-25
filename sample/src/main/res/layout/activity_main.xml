@@ -15,7 +15,7 @@
         android:layout_height="wrap_content"
         expandable:headerLayout="@layout/view_header"
         expandable:contentLayout="@layout/view_content"
-        android:background="#e74c3c"/>
+        expandable:duration="500"/>
 
     <com.andexert.expandablelayout.library.ExpandableLayoutListView
         android:id="@+id/listview"
